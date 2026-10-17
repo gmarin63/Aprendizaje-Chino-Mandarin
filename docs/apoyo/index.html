@@ -38,14 +38,36 @@
   <p>Si te gustaría contribuir, puedes elegir la opción que corresponda a tu ubicación. Los aportes son completamente voluntarios; no necesitas donar para participar en las clases ni utilizar los materiales.</p>
   <div class="grid">
     <article class="item">
-      <div class="emoji">🇨🇴</div><h3>Aportes desde Colombia</h3>
-      <p class="muted">En el enlace de pago podrás elegir un medio disponible, como Nequi, Bancolombia, PSE o tarjeta, según las opciones habilitadas.</p>
-      <a id="colombiaBtn" class="button disabled" href="#" aria-disabled="true">Enlace de aportes en configuración</a>
+      <div class="emoji">📱</div><h3>Aportes por Nequi (Colombia)</h3>
+      <p class="muted">Titular: Gerardo Marín</p>
+      <p><strong>Número Nequi:</strong> <span id="nequiNumber">3058071525</span></p>
+      <button class="button secondary" type="button" onclick="copyText('3058071525', this)">Copiar número de Nequi</button>
+      <p class="tiny">Antes de confirmar, verifica que la app muestre el destinatario correcto. Para enviar desde el extranjero, consulta una remesadora compatible; este número no es una cuenta SWIFT.</p>
     </article>
     <article class="item">
-      <div class="emoji">🌎</div><h3>Aportes internacionales</h3>
-      <p class="muted">Una opción para quienes desean apoyar desde otros países mediante una plataforma compatible.</p>
-      <a id="internationalBtn" class="button disabled" href="#" aria-disabled="true">Enlace internacional en configuración</a>
+      <div class="emoji">🏦</div><h3>Aportes por Bancolombia (Colombia)</h3>
+      <p class="muted">Puedes transferir usando la llave Bre-B que el titular registró.</p>
+      <p><strong>Llave Bancolombia:</strong> <span id="bancolombiaKey">@gerardo08603</span></p>
+      <button class="button secondary" type="button" onclick="copyText('@gerardo08603', this)">Copiar llave Bancolombia</button>
+      <p class="tiny">Verifica el nombre del destinatario en tu aplicación antes de enviar.</p>
+      <a id="colombiaBtn" class="button primary" href="#" target="_blank" rel="noopener noreferrer">💚 Otras opciones de pago en Colombia (Wompi)</a>
+    </article>
+    <article class="item">
+      <div class="emoji">🌍</div><h3>Transferencia bancaria internacional</h3>
+      <p class="muted">Para enviar desde el extranjero a una cuenta de ahorros Bancolombia en Colombia:</p>
+      <p><strong>Beneficiario:</strong> Gerardo Marin Gonzalez</p>
+      <p><strong>Banco:</strong> Bancolombia S.A. (Colombia)</p>
+      <p><strong>Tipo de cuenta:</strong> Ahorros</p>
+      <p><strong>Número de cuenta:</strong> <span id="accountNumber">91280596880</span></p>
+      <p><strong>Código SWIFT/BIC:</strong> <span id="swiftCode">COLOCOBM</span> (si solicitan 11 caracteres: COLOCOBMXXX)</p>
+      <button class="button secondary" type="button" onclick="copyText('Gerardo Marin Gonzalez\nBancolombia S.A., Colombia\nCuenta de ahorros: 91280596880\nSWIFT/BIC: COLOCOBM (o COLOCOBMXXX si solicitan 11 caracteres)', this)">Copiar datos para transferencia internacional</button>
+      <p class="tiny">Antes de enviar, consulta con tu banco si admite transferencias a Colombia, qué datos adicionales exige y cuáles serán las comisiones y el tipo de cambio. Los bancos intermediarios también pueden cobrar. No publiques ni envíes tu cédula o dirección salvo que el banco lo solicite por un canal seguro.</p>
+    </article>
+    <article class="item">
+      <div class="emoji">🌎</div><h3>Giros internacionales a Nequi</h3>
+      <p class="muted">Desde otros países, utiliza una remesadora aliada que opere en tu país y permita entregar el dinero a Nequi en Colombia.</p>
+      <a class="button secondary" href="https://www.nequi.com.co/personas/moneda-extranjera" target="_blank" rel="noopener noreferrer">Consultar opciones oficiales de Nequi</a>
+      <p class="tiny">La disponibilidad, los requisitos y las tarifas dependen del país y del proveedor. No todos los bancos extranjeros pueden transferir directamente a un número Nequi.</p>
     </article>
   </div>
   <p class="note"><strong>Transparencia:</strong> los fondos recibidos se destinarán a la elaboración de materiales educativos y al desarrollo de herramientas para aprender chino mandarín. Compartiremos novedades sobre los avances del proyecto.</p>
@@ -59,17 +81,18 @@
 <script>
 /* CONFIGURACIÓN: reemplaza estos valores por tus enlaces reales antes de difundir la página. */
 const WOMPI_PAYMENT_URL = "https://checkout.wompi.co/l/VPOS_ytvlVT";
-const INTERNATIONAL_SUPPORT_URL = "";
-function configureButton(id, url, label) {
-  const el = document.getElementById(id);
-  if (url && /^https:\/\//i.test(url)) {
-    el.href = url; el.textContent = label; el.classList.remove("disabled");
-    el.classList.add(id === "colombiaBtn" ? "primary" : "secondary");
-    el.removeAttribute("aria-disabled"); el.target = "_blank"; el.rel = "noopener noreferrer";
+function copyText(value, button) {
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(value).then(() => {
+      const original = button.textContent;
+      button.textContent = "Copiado";
+      setTimeout(() => button.textContent = original, 1800);
+    }).catch(() => window.prompt("Copia estos datos:", value));
+  } else {
+    window.prompt("Copia estos datos:", value);
   }
 }
-configureButton("colombiaBtn", WOMPI_PAYMENT_URL, "💚 Aportar desde Colombia");
-configureButton("internationalBtn", INTERNATIONAL_SUPPORT_URL, "🌎 Apoyar desde otro país");
+document.getElementById("colombiaBtn").href = WOMPI_PAYMENT_URL;
 </script>
 </body>
 </html>
